@@ -1,0 +1,117 @@
+-> 13 Sending Emails & Email Verification Lesson
+	-> Sending Emails with Python + Flask-Mail
+	-> 20 min to complete · By Brandon Gigous
+
+-> Contents
+	-> Introduction
+	-> Install Flask-Mail
+	-> The Configuration Settings
+	-> Settings For Your Gmail Account
+	-> Initialising Flask-Mail
+	-> Sending Emails from Flask
+	-> Functional Email Sending
+	-> Make Your Templates
+	-> Send an email
+	-> Summary: Sending Emails with Python + Flask-Mail
+
+-> Introduction
+	-> While email was invented decades ago, it's still around and in use today more than ever
+	-> The technology behind most email sending and receiving is called Simple Mail Transfer Protocol (SMTP)
+	-> To keep your life simple, you don't have to get too technical with sending emails via your app
+	-> Behold! Flask-Mail is an extension that does most of that work for you
+	-> In this lesson, you'll install and configure Flask-Mail to be able to send email through Python
+
+-> Install Flask-Mail
+	-> To install it, use the simple pip command: $ pip install flask-mail
+	-> To add email support to your app, you'll only need two things:
+		-> An SMTP server
+		-> Settings configured for that server
+	-> For the SMTP server, you could host one yourself, but for development, it's much easier to use an external server
+	-> That's why in the previous lesson, you set up a secondary Gmail account so you can start playing around with emails right away
+
+-> The Configuration Settings
+	-> What do you need to do for the SMTP configuration stuff?
+	-> There's plenty of settings, but this lesson will guide you through it all
+	-> Flask-Mail will need these configuration keys set:
+		-> MAIL_SERVER: The hostname or IP of the email server. Default: localhost
+		-> MAIL_PORT: The port of the email server. Default: 25
+		-> MAIL_USE_TLS: To enable Transport Layer Security (TLS), or not. Default: False
+		-> MAIL_USE_SSL: To enable Secure Sockets Layer (SSL), or not. Default: False
+		-> MAIL_USERNAME: Mail account username
+		-> MAIL_PASSWORD: Mail account (app) password
+
+-> Settings For Your Gmail Account
+	-> Note: See a previous lesson for how to enable SMTP on a Gmail account, be careful though, you may not want to do this on your personal account
+	-> To enable email support using your new Gmail account, you'll have to set most of the settings above
+	-> What better place than your file? To take advantage of inheritance, you can place these in your base class
+	-> For your new Gmail account, you can set your configuration settings like this:
+		-> MAIL_SERVER = 'smtp.gmail.com'
+		-> MAIL_PORT = 587
+		-> MAIL_USE_TLS = True
+		-> MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+		-> MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+		-> # Other email settings
+		-> RAGTIME_ADMIN = os.environ.get('RAGTIME_ADMIN')
+
+-> Initialising Flask-Mail
+	-> To initialise Flask-Mail, you must add the extension initialisation code to your app
+		-> Add the following code in your app package's __init__.py file:
+		-> from flask_mail import Mail
+		-> mail = Mail()
+		-> def create_app(config_name):
+			-> mail.init_app(app)
+	-> You've just configured Flask-Mail to help you send emails from your app
+
+-> Sending Emails from Flask
+	-> All you need is Flask-Mail, an email account, and a few lines of code to deliver thousands of messages a day
+	-> Functional Email Sending: "Functional" meaning you'll encapsulate your email-sending functionality in a function
+	-> Create a new file named email.py in your app package
+		-> The code for the email-sending function (called send_email) is:
+			-> from flask_mail import Message
+			-> from . import mail
+			-> def send_email(to, subject, template, **kwargs):
+				-> msg = Message(
+					-> subject=current_app.config['RAGTIME_MAIL_SUBJECT_PREFIX'] + subject,
+					-> recipients=[to],
+					-> sender=current_app.config['RAGTIME_MAIL_SENDER'])
+				-> msg.body = render_template(template + '.txt', **kwargs)
+				-> msg.html = render_template(template + '.html', **kwargs)
+				-> mail.send(msg)
+
+-> Make Your Templates
+	-> Now it's your turn to make both:
+		-> A welcome email for registered users
+		-> A notification email for the app admin (you) that a user registered
+	-> You can have these emails say whatever you want, but here are the template files:
+		-> /templates/mail/welcome.txt
+		-> /templates/mail/welcome.html
+		-> /templates/mail/new_user.txt
+		-> /templates/mail/new_user.html
+	-> In your templates, use placeholders like {{ user.username }} and {{ time }}
+
+-> Send an email
+	-> To test if your email code works, you can run the send_email function within a Flask shell session
+		-> Example code to send the email:
+			-> from app.email import send_email
+			-> u = User(username="thomas", email="thomas@example.com", password="password")
+			-> send_email(u.email, "You've got mail!", 'mail/welcome', user=u)
+	-> If it worked, you'll see output like this:
+		-> send: 'ehlo [127.0.1.1]\r\n'
+		-> reply: b'250-smtp.gmail.com at your service, [71.211.182.93]\r\n'
+		-> reply: b'250 SMTPUTF8\r\n'
+		-> reply: b'221 2.0.0 closing connection t25sm2354630iog.19 - gsmtp\r\n'
+		-> retcode (250); Msg: b'smtp.googlemail.com at your service'
+
+-> Learn by Doing
+	-> Try testing the email sending functionality by registering an account on your site
+	-> Check that both the welcome email and the notification email are sent correctly
+
+-> Summary: Sending Emails with Python + Flask-Mail
+	-> In this lesson, you've:
+		-> Installed Flask-Mail, the extension that makes handling email communication much simpler
+		-> Understood the importance of having an SMTP server and appropriate settings
+		-> Familiarised yourself with basic Flask-Mail configuration by setting up key parameters like MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USERNAME, and MAIL_PASSWORD using environment variables
+		-> Implemented the initialisation of the Flask-Mail extension within your Flask app
+		-> Created a function that wraps Flask-Mail functionalities
+		-> Designed both text and HTML email templates that personalise emails for new users or admin notifications
+		-> Tested email sending within the Flask shell to confirm that your setup works correctly and experienced the satisfaction of your app sending actual emails
