@@ -1,58 +1,58 @@
 -> Sending Emails with Python + Flask-Mail
-	-> Email is still widely used, and Flask-Mail simplifies email sending in your app
-	-> Flask-Mail is an extension that helps handle the complexities of sending emails via SMTP
-	-> In this lesson, you'll install and configure Flask-Mail to send emails from your Python app
+    -> Email is still widely used, and Flask-Mail simplifies email sending in your app
+    -> Flask-Mail is an extension that helps handle the complexities of sending emails via SMTP
+    -> In this lesson, you'll install and configure Flask-Mail to send emails from your Python app
 
 -> Install Flask-Mail
-	-> Use the pip command: `pip install flask-mail` to install Flask-Mail
-	-> To add email support to your app, you need two things: an SMTP server and the correct configuration settings
-	-> You can use an external SMTP server (e.g., Gmail) for development
+    -> Use the pip command: `pip install flask-mail` to install Flask-Mail
+    -> To add email support to your app, you need two things: an SMTP server and the correct configuration settings
+    -> You can use an external SMTP server (e.g., Gmail) for development
 
 -> The Configuration Settings
-	-> Set these configuration keys in your Flask app to enable Flask-Mail
-		-> MAIL_SERVER: The hostname or IP of the email server (default: `localhost`)
-		-> MAIL_PORT: The port of the email server (default: 25)
-		-> MAIL_USE_TLS: Whether to use TLS (Transport Layer Security) (default: False)
-		-> MAIL_USE_SSL: Whether to use SSL (Secure Sockets Layer) (default: False)
-		-> MAIL_USERNAME: The mail account username
-		-> MAIL_PASSWORD: The mail account password
+    -> Set these configuration keys in your Flask app to enable Flask-Mail
+        -> MAIL_SERVER: The hostname or IP of the email server (default: `localhost`)
+        -> MAIL_PORT: The port of the email server (default: 25)
+        -> MAIL_USE_TLS: Whether to use TLS (Transport Layer Security) (default: False)
+        -> MAIL_USE_SSL: Whether to use SSL (Secure Sockets Layer) (default: False)
+        -> MAIL_USERNAME: The mail account username
+        -> MAIL_PASSWORD: The mail account password
 
 -> Settings for Your Gmail Account
-	-> You need to enable SMTP on your Gmail account (but avoid using your personal account for security)
-	-> Set your Gmail account configuration in the `config.py` file
-		-> Example configuration for Gmail:
-			-> MAIL_SERVER = 'smtp.gmail.com'
-			-> MAIL_PORT = 587
-			-> MAIL_USE_TLS = True
-			-> MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-			-> MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    -> You need to enable SMTP on your Gmail account (but avoid using your personal account for security)
+    -> Set your Gmail account configuration in the `config.py` file
+        -> Example configuration for Gmail:
+            -> MAIL_SERVER = 'smtp.gmail.com'
+            -> MAIL_PORT = 587
+            -> MAIL_USE_TLS = True
+            -> MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+            -> MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
--> Initializing Flask-Mail
-	-> To initialize Flask-Mail, add the following code to your app's main package:
-		-> `mail = Mail()`
-		-> `mail.init_app(app)`
+-> Initialising Flask-Mail
+    -> To initialise Flask-Mail, add the following code to your app's main package:
+        -> `mail = Mail()`
+        -> `mail.init_app(app)`
 
 -> Sending Emails from Flask
-	-> You can create an email-sending function using Flask-Mail
-		-> Example of a basic `send_email()` function that takes recipient, subject, template, and other parameters
+    -> You can create an email-sending function using Flask-Mail
+        -> Example of a basic `send_email()` function that takes recipient, subject, template, and other parameters
 
 -> Functional Email Sending
-	-> Create an email-sending function that uses Flask-Mail to send messages
-		-> The function will use the Message class from Flask-Mail to create an email
-		-> The email can have both text and HTML versions, with the text version used if the HTML one gets blocked
+    -> Create an email-sending function that uses Flask-Mail to send messages
+        -> The function will use the Message class from Flask-Mail to create an email
+        -> The email can have both text and HTML versions, with the text version used if the HTML one gets blocked
 
 -> Make Your Templates
-	-> Use Jinja2 templating to create both text and HTML email templates
-		-> Example templates: `welcome.txt`, `welcome.html`, `new_user.txt`, `new_user.html`
-		-> Placeholders like `{{user.username}}` can be used in templates to personalize the message
+    -> Use Jinja2 templating to create both text and HTML email templates
+        -> Example templates: `welcome.txt`, `welcome.html`, `new_user.txt`, `new_user.html`
+        -> Placeholders like `{{user.username}}` can be used in templates to personalise the message
 
 -> Send an Email
-	-> Test the email functionality by sending an email through Flask shell
-		-> Example: `send_email(u.email, "You've got mail!", 'mail/welcome', user=u)`
+    -> Test the email functionality by sending an email through Flask shell
+        -> Example: `send_email(u.email, "You've got mail!", 'mail/welcome', user=u)`
 
 -> Summary: Sending Emails with Python + Flask-Mail
-	-> Installed Flask-Mail to simplify email communication
-	-> Configured the necessary SMTP server settings in the app
-	-> Initialized Flask-Mail and created a function to send emails
-	-> Created personalized text and HTML email templates for users and admins
-	-> Tested the email sending functionality using Flask shell
+    -> Installed Flask-Mail to simplify email communication
+    -> Configured the necessary SMTP server settings in the app
+    -> Initialised Flask-Mail and created a function to send emails
+    -> Created personalised text and HTML email templates for users and admins
+    -> Tested the email sending functionality using Flask shell
