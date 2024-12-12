@@ -1,0 +1,84 @@
+-> outline 
+	-> generating unique confirmation tokens per user 
+	-> confirming a user with the token 
+	-> blocking access to unconfirmed users 
+
+-> creating tokens which can be used to confirm users 
+	-> he is using a JSON token web serialiser 
+	-> each token is unique and is sent to the user via an email link  
+	-> these tokens can then be validated later to confirm the user account 
+
+	-> to create a token serialiser 
+		-> the app's secret key is passed in 
+		-> this is using the Serializer method 
+		-> he is in the CLI 
+		-> this is passed into the .dumps method 
+
+	-> the data contained in the token can then be read by the application, using the loads method
+
+	-> in models.py 
+		-> he imports itsdangerous 
+		-> then adds a confirmed column to the user model 
+			-> this contains users who have verified their accounts via a token 
+		-> he then creates a user method which generates and contains a token containing the user ID 
+		-> he then defines another method which can confirm a user with a token 
+			-> if the token is expired, this throws an exception 
+			-> otherwise, the data will be loaded containing the user's ID 
+		-> he then does a check to make sure the user's ID matches with the ID in the token 
+		-> if this passes, then the user is updated and confirmed in the database 
+			-> this is done via the .confirmed method 
+			-> the .add method is used to then commit the changes to GitHub as part of the function, in the models.py file 
+
+	-> going to views in the .auth blueprint 
+		-> making a route to confirm the user account 
+			-> adding another call to send email in the register_view function 
+			-> this involves making a new template containing a link to the confirm link 
+			-> this route has to contain a token for the new user 
+			-> we first need to restrict access to the app to users who are confirmed 
+			-> to make a view function that gets called before any other view function
+				-> the @auth.before_app_request decorator is then used 
+				-> a function is then defined which removes the user's access
+			-> the user has to be signed in and not get confirmed 
+			-> this means using the .is_authenticated and .confirmed methods 
+			-> the requested endpoint also has to not be in the auth blueprint 
+			-> the request also cannot be for a static resource 
+			-> this is checked with the .endpoint method and a boolean expression 
+			-> the page is then redirected using a return defined at the end of the function 
+
+		-> conditions which have to be met before a user's access can be restricted 
+			-> making a route which the user can visit to confirm their account 
+			-> he uses the @auth.route decorator 
+			-> the next decorator which he uses is login_required 
+			-> he then defines the confirm method, which takes token as its argument 
+			-> this first checks if the current user is already confirmed, by using an if block with the current_user.confirmed method 
+			-> this flashes the user a message and returns a redirect method in this case 
+			-> the confirmed status of the user is then committed in a new if block 
+			-> this is done using the db.session.commit method and then flashing another method to the user 
+			-> an else block is also defined which clashes another method to the user if their account has not been confirmed 
+			-> the user is then redirected to the index page, using the redirect method 
+			-> this is done outside all of the if blocks so that it is done on an unconditional basis 
+
+		-> returning a template which shows that the user is unconfirmed
+			-> he defines a new route handler, using the @auth.route method 
+			-> the then defines an unconfirmed route, which returns the unconfirmed template
+			-> this is done using the .is_anonymous and .confirmed methods 
+			-> this returns a render of a template
+			-> this page tells the user that they still need to confirm their account 
+
+		-> testing that this has worked
+			-> providing a link to the confirmed route in the unconfirmed page 
+			-> this is confirmed without the token parameter
+			-> he uses the @auth.route decorator for this 
+			-> the confirm route should resend the confirmation email 
+			-> we then want it to flash a message telling the user that the email has been sent
+			-> he then starts the app, to login as an unconfirmed user to check this has worked  
+			-> this shows the new unconfirmed page once logged in 
+			-> a new confirmation token is sent to the user when the link is clicked for this 
+			-> the confirmation email contains the link to confirm the account for this  
+			-> the account is confirmed once the link is clicked for this 
+
+	-> video review 
+		-> he went over   
+			-> generating unique confirmation tokens per user 
+			-> confirming a user with the token 
+			-> blocking access to unconfirmed users 
