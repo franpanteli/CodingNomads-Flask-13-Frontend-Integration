@@ -1,38 +1,45 @@
--> Users and User Authentication Lesson
-    -> Set Up a Test Gmail Account
-    -> 8 min to complete · By Brandon Gigous
-    -> Contents
-        -> Introduction
-        -> Set Up a Gmail Account for your App
-        -> Summary: How to Set Up a Test Gmail Account for Less Secure Apps
-    -> In this lesson, you'll set up a secondary email account for your Python-Flask app
-    -> A secondary Gmail account is useful for testing and avoids risking your personal email security
-    -> You don't have to use Gmail; the lesson covers Gmail-specific steps, but SMTP setup may vary for other platforms
-    -> Set Up a Gmail Account for your App
-        -> Step 1: Create a Gmail Account
-            -> Head to the Gmail home page and click "Create an account"
-        -> Step 2: Enter Account Details
-            -> Enter a unique email and choose a username; make sure to remember your password
-            -> Use any first or last name as long as it's appropriate
-        -> Step 3: Configure Settings
-            -> Complete the setup and access your inbox
-            -> Click the settings gear in the top right corner
-            -> In the settings menu, click "Accounts and Import" then "Other Google Account settings"
-        -> Step 4: Turn Less Secure Apps ON
-            -> In the "Security" tab, scroll down to "Less secure app access"
-            -> Turn "Allow less secure apps" to ON; this is needed for sending emails from Flask
-            -> If you can't find this option, continue to the next step
-        -> Step 5: Enable Two-Factor Authentication
-            -> Go to "2-Step Verification" to enable two-factor authentication
-            -> Enter your phone number for security codes, or choose another security method like Google Authenticator
-        -> Step 6: Create App Password
-            -> Once two-factor authentication is enabled, scroll down to "Signing in to Google"
-            -> Click "App passwords" and select "Other (Custom name)"
-            -> Name the app (e.g., "flask-webdev") and generate a 16-character app password
-            -> Write down the app password for use in your Flask app to authenticate with Google's SMTP server
-    -> Now you're ready to configure Flask-Mail to send emails and receive notifications within your app
-    -> Summary: To set up a test Gmail account for less secure apps:
-        -> Create a Gmail account and enter account details
-        -> Access settings and turn on "Less secure apps"
-        -> Enable two-factor authentication and create an app password
-    -> On to the next lesson!
+-> users and user authentication lesson  
+    -> set up a test gmail account  
+    -> 8 min to complete · by brandon gigous  
+    -> contents  
+        -> introduction  
+        -> set up a gmail account for your app  
+        -> summary: how to set up a test gmail account for less secure apps  
+    -> in this lesson, you'll set up a secondary email account for your python-flask app  
+    -> a secondary gmail account is useful for testing and avoids risking your personal email security  
+    -> you don't have to use gmail; the lesson covers gmail-specific steps, but smtp setup may vary for other platforms  
+
+    -> set up a gmail account for your app  
+        -> step 1: create a gmail account  
+            -> head to the gmail home page and click "create an account"  
+
+        -> step 2: enter account details  
+            -> enter a unique email and choose a username; make sure to remember your password  
+            -> use any first or last name as long as it's appropriate  
+
+        -> step 3: configure settings  
+            -> complete the setup and access your inbox  
+            -> click the settings gear in the top right corner  
+            -> in the settings menu, click "accounts and import" then "other google account settings"  
+
+        -> step 4: turn less secure apps on  
+            -> in the "security" tab, scroll down to "less secure app access"  
+            -> turn "allow less secure apps" to on; this is needed for sending emails from flask  
+            -> if you can't find this option, continue to the next step  
+
+        -> step 5: enable two-factor authentication  
+            -> go to "2-step verification" to enable two-factor authentication  
+            -> enter your phone number for security codes, or choose another security method like google authenticator  
+
+        -> step 6: create app password  
+            -> once two-factor authentication is enabled, scroll down to "signing in to google"  
+            -> click "app passwords" and select "other (custom name)"  
+            -> name the app (e.g., "flask-webdev") and generate a 16-character app password  
+            -> write down the app password for use in your flask app to authenticate with google's smtp server  
+
+    -> now you're ready to configure flask-mail to send emails and receive notifications within your app  
+
+    -> summary: to set up a test gmail account for less secure apps:  
+        -> create a gmail account and enter account details  
+        -> access settings and turn on "less secure apps"  
+        -> enable two-factor authentication and create an app password  
